@@ -1,52 +1,163 @@
-body{
-      margin:0;
-        background:black;
-          color:#00f0ff;
-            font-family:monospace;
-              overflow:hidden;
-              }
+:root {
+    --on: 0;
+}
 
-              .scan{
-                position:fixed;
-                  width:100%;
-                    height:100vh;
-                      display:flex;
-                        justify-content:center;
-                          align-items:center;
-                            flex-direction:column;
-                            }
+body {
+    margin: 0;
+    background: #000;
+    color: #00f0ff;
+    font-family: 'Orbitron', sans-serif;
+    overflow: hidden;
+}
 
-                            video{
-                              width:320px;
-                                border:2px solid #00f0ff;
-                                }
+/* Fondo con rejilla (Grid) */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(#00f0ff22 1px, transparent 1px),
+        linear-gradient(90deg, #00f0ff22 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: grid 8s linear infinite;
+}
 
-                                canvas{
-                                  position:absolute;
-                                  }
+@keyframes grid {
+    to { transform: translateY(40px); }
+}
 
-                                  .login{
-                                    display:none;
-                                      position:fixed;
-                                        width:100%;
-                                          height:100vh;
-                                            justify-content:center;
-                                              align-items:center;
-                                              }
+/* Efecto de escáner láser */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(transparent, #00f0ff22, transparent);
+    animation: scan 3s linear infinite;
+}
 
-                                              .card{
-                                                padding:20px;
-                                                  border:1px solid #00f0ff;
-                                                  }
+@keyframes scan {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100%); }
+}
 
-                                                  .cv{
-                                                    display:none;
-                                                      width:100%;
-                                                        height:100vh;
-                                                        }
+/* HUD Superior */
+.hud {
+    position: fixed;
+    top: 10px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    opacity: .8;
+    z-index: 10;
+}
 
-                                                        .cv iframe{
-                                                          width:100%;
-                                                            height:100%;
-                                                              border:none;
-                                                              }
+.badge {
+    border: 1px solid #00f0ff55;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Login y Reactor */
+.login {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    z-index: 5;
+}
+
+.reactor {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #00f0ff, #001);
+    box-shadow:
+        0 0 calc(220px * var(--on)) #00f0ff,
+        inset 0 0 70px #00f0ff;
+    animation: reactor 1.6s infinite;
+    transition: box-shadow 0.5s ease;
+}
+
+@keyframes reactor {
+    50% { transform: scale(1.1); }
+}
+
+/* Tarjeta de Acceso */
+.card {
+    width: 300px;
+    padding: 28px;
+    background: rgba(0, 0, 0, .7);
+    border: 1px solid #00f0ff33;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+}
+
+.card.active {
+    box-shadow: 0 0 50px #00f0ff;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: #001;
+    border: 1px solid #00f0ff33;
+    color: #00f0ff;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    background: #00f0ff;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #fff;
+    box-shadow: 0 0 20px #00f0ff;
+}
+
+/* Partículas del Ratón */
+.p {
+    position: fixed;
+    width: 3px;
+    height: 3px;
+    background: #00f0ff;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 99;
+}
+
+/* Contenedor del CV */
+.cv {
+    display: none;
+    width: 100%;
+    height: 100vh;
+}
+
+.cv iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+#status {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    font-size: 13px;
+    opacity: .9;
+}
