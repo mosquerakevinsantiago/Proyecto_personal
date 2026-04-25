@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>JARVIS AI</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="style.css">
-
-<script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
-<script defer src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS GOD+</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<!-- ESCANEO -->
-<div class="scan" id="scan">
-  <video id="video" autoplay muted></video>
-    <p id="status">Cargando IA...</p>
+    <div class="hud">
+        <div class="badge">JARVIS • ONLINE</div>
+        <div class="badge" id="micState">MIC: OFF</div>
     </div>
 
-    <!-- LOGIN -->
+    <div id="status">Inicializando…</div>
+
     <section class="login" id="login">
-      <div class="card">
-          <h2>ACCESS</h2>
-              <button onclick="enter()">Entrar</button>
-                </div>
-                </section>
+        <div class="reactor"></div>
 
-                <!-- CV -->
-                <section class="cv" id="cv">
-                  <iframe src="https://mosquerakevinsantiago.github.io/Cv_Kevin_Perea/"></iframe>
-                  </section>
+        <div class="card" id="card">
+            <h2>ACCESS</h2>
+            <input id="email" placeholder="USER">
+            <input id="password" type="password" placeholder="PASSWORD">
 
-                  </body>
-                  </html>
+            <button onclick="toggleCore()">ACTIVAR NÚCLEO</button>
+            <button onclick="enter()">ENTRAR</button>
+            <button onclick="toggleMic()">🎤 MIC ON/OFF</button>
+
+            <p id="error" style="color:#ff4d4d;"></p>
+        </div>
+    </section>
+
+    <section class="cv" id="cv">
+        <iframe src="https://mosquerakevinsantiago.github.io/Cv_Kevin_Perea/"></iframe>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
