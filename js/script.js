@@ -2,7 +2,6 @@
 function speak(text) {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "es-ES";
-    u.rate = 1;
 
     const voices = speechSynthesis.getVoices();
     const voz = voices.find(v => v.lang.includes("es"));
@@ -20,84 +19,88 @@ recognition.lang = "es-ES";
 recognition.continuous = true;
 recognition.interimResults = false;
 
-/* ===== INICIAR AUTOMÁTICO ===== */
-function iniciarSistema() {
+/* ===== ESTADO ===== */
+let activo = false;
+
+/* ===== INICIAR ===== */
+function iniciar() {
     try {
         recognition.start();
-        speak("Asistente activado");
-    } catch (e) {
-        console.log("Ya está activo");
-    }
+        console.log("Escuchando...");
+    } catch (e) {}
 }
 
-/* ===== ESCUCHA CONTINUA ===== */
+/* ===== ESCUCHA ===== */
 recognition.onresult = (event) => {
     const texto = event.results[event.results.length - 1][0].transcript.toLowerCase();
     console.log("Escuchado:", texto);
 
-    ejecutar(texto);
+    // ACTIVACIÓN
+    if (texto.includes("ok jarvis")) {
+        activo = true;
+        speak("Te escucho");
+        return;
+    }
+
+    // SI ESTÁ ACTIVO, EJECUTA
+    if (activo) {
+        ejecutar(texto);
+        activo = false; // vuelve a esperar
+    }
 };
 
 /* ===== COMANDOS ===== */
 function ejecutar(t) {
 
-    // SALUDO
     if (t.includes("hola")) {
         speak("Hola Kevin");
     }
 
-    // HORA
     else if (t.includes("hora")) {
         const hora = new Date().toLocaleTimeString();
         speak("La hora es " + hora);
     }
 
-    // FECHA
     else if (t.includes("fecha")) {
         const fecha = new Date().toLocaleDateString();
         speak("Hoy es " + fecha);
     }
 
-    // ABRIR GOOGLE
-    else if (t.includes("abre google")) {
-        speak("Abriendo Google");
-        window.open("https://www.google.com");
-    }
-
-    // BUSCAR EN GOOGLE
     else if (t.includes("buscar")) {
         const busqueda = t.replace("buscar", "").trim();
         speak("Buscando " + busqueda);
         window.open("https://www.google.com/search?q=" + encodeURIComponent(busqueda));
     }
 
-    // YOUTUBE
-    else if (t.includes("abre youtube")) {
+    else if (t.includes("youtube")) {
         speak("Abriendo YouTube");
         window.open("https://www.youtube.com");
     }
 
-    // NÚCLEO
+    else if (t.includes("google")) {
+        speak("Abriendo Google");
+        window.open("https://www.google.com");
+    }
+
     else if (t.includes("activar núcleo") || t.includes("activar nucleo")) {
         toggleCore();
         speak("Núcleo activado");
     }
 
-    // APAGAR
-    else if (t.includes("apagar asistente")) {
-        speak("Apagando asistente");
+    else if (t.includes("apagar sistema")) {
+        speak("Apagando sistema");
         recognition.stop();
     }
 
     else {
-        console.log("No reconocido");
+        speak("No entendí el comando");
     }
 }
 
-/* ===== REINICIO AUTOMÁTICO ===== */
+/* ===== AUTO REINICIO ===== */
 recognition.onend = () => {
     recognition.start();
 };
 
-/* ===== AUTO INICIO ===== */
-window.onload = iniciarSistema;
+/* ===== INICIO AUTOMÁTICO ===== */
+window.onload = iniciar;
