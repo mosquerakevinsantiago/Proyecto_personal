@@ -1,41 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JARVIS GOD+</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Jarvis Kevin</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="hud">
-        <div class="badge">JARVIS • ONLINE</div>
-        <div class="badge" id="micState">MIC: OFF</div>
-    </div>
+<div class="hud">
+    <h1>JARVIS</h1>
+    <p id="status">Iniciando...</p>
+    <div class="circle"></div>
+    <button onclick="startSystem()">INICIAR</button>
+</div>
 
-    <div id="status">Inicializando…</div>
-
-    <section class="login" id="login">
-        <div class="reactor"></div>
-
-        <div class="card" id="card">
-            <h2>ACCESS</h2>
-            <input id="email" placeholder="USER">
-            <input id="password" type="password" placeholder="PASSWORD">
-
-            <button onclick="toggleCore()">ACTIVAR NÚCLEO</button>
-            <button onclick="enter()">ENTRAR</button>
-            <button onclick="toggleMic()">🎤 MIC ON/OFF</button>
-
-            <p id="error" style="color:#ff4d4d;"></p>
-        </div>
-    </section>
-
-    <section class="cv" id="cv">
-        <iframe src="https://mosquerakevinsantiago.github.io/Cv_Kevin_Perea/"></iframe>
-    </section>
-
-    <script src="js/script.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
